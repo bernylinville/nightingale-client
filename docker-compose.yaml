@@ -1,0 +1,28 @@
+version: "3.7"
+
+services:
+  categraf:
+    image: "flashcatcloud/categraf:v0.3.26"
+    container_name: "categraf"
+    restart: always
+    environment:
+      TZ: Asia/Shanghai
+      HOST_PROC: /hostfs/proc
+      HOST_SYS: /hostfs/sys
+      HOST_MOUNT_PREFIX: /hostfs
+    volumes:
+      - ./categraf/conf:/etc/categraf/conf
+      - /:/hostfs
+      - /var/run/docker.sock:/var/run/docker.sock
+      - /etc/hostname:/etc/hostname:ro
+
+  # promtail:
+  #   image: grafana/promtail:2.8.4
+  #   container_name: promtail
+  #   restart: always
+  #   environment:
+  #     TZ: Asia/Shanghai
+  #   volumes:
+  #     - /var/log:/var/log:ro
+  #     - ./promtailetc:/etc/promtail
+  #   command: -config.file=/etc/promtail/promtail.yml
